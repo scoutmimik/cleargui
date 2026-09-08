@@ -1,8 +1,8 @@
 package com.clearpause;
 
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -23,7 +23,6 @@ public class ClearPauseMod {
     public static final String NAME = "Clear Pause Menu";
     public static final String VERSION = "1.0.0";
 
-    // MCP názvy pre field buttonList v GuiScreen
     private static final String[] BUTTON_LIST_FIELD = new String[]{"buttonList", "field_146292_n"};
 
     @Mod.EventHandler
@@ -33,12 +32,13 @@ public class ClearPauseMod {
 
     @SubscribeEvent
     public void onDrawScreen(GuiScreenEvent.DrawScreenEvent.Pre event) {
-        if (event.gui instanceof GuiIngameMenu) {
-            // Cancelne vykreslenie tmavého pozadia
+        // Aplikuje sa na vsetky GuiScreen obrazovky pocas hry, okrem hlavneho menu (GuiMainMenu)
+        if (event.gui != null && !(event.gui instanceof GuiMainMenu)) {
+            // Zrusime vykreslenie tmaveho pozadia
             event.setCanceled(true);
 
             try {
-                // Cez ReflectionHelper obídeme protected prístup
+                // Vykreslime tlacidla, aby ostali funkcne
                 List<GuiButton> buttons = ReflectionHelper.getPrivateValue(GuiScreen.class, event.gui, BUTTON_LIST_FIELD);
                 
                 if (buttons != null) {
