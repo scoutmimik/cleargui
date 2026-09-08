@@ -2,9 +2,9 @@ package com.clearpause;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiSelectWorld;
-import net.minecraft.client.gui.GuiMultiplayer;
-import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.client.gui.GuiIngameMenu;
+import net.minecraft.client.gui.GuiOptions;
+import net.minecraft.client.gui.GuiVideoSettings;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -34,26 +34,29 @@ public class ClearPauseMod {
 
     @SubscribeEvent
     public void onDrawScreen(GuiScreenEvent.DrawScreenEvent.Pre event) {
-        // Kontrola: Sme vo svete (mc.theWorld != null) a NIE SME v hlavnych menu zoznamoch
-        if (event.gui != null && event.gui.mc != null && event.gui.mc.theWorld != null 
-                && !(event.gui instanceof GuiMainMenu)
-                && !(event.gui instanceof GuiSelectWorld)
-                && !(event.gui instanceof GuiMultiplayer)) {
+        if (event.gui != null && event.gui.mc != null && event.gui.mc.theWorld != null) {
+            
+            // Priehľadnosť aplikujeme iba na hl. pause menu, základné Options a Video Settings
+            boolean isTargetMenu = (event.gui instanceof GuiIngameMenu) 
+                                || (event.gui instanceof GuiOptions) 
+                                || (event.gui instanceof GuiVideoSettings);
 
-            event.setCanceled(true);
+            if (isTargetMenu) {
+                event.setCanceled(true);
 
-            try {
-                List<GuiButton> buttons = ReflectionHelper.getPrivateValue(GuiScreen.class, event.gui, BUTTON_LIST_FIELD);
-                
-                if (buttons != null) {
-                    for (GuiButton button : buttons) {
-                        if (button.visible) {
-                            button.drawButton(event.gui.mc, event.mouseX, event.mouseY);
+                try {
+                    List<GuiButton> buttons = ReflectionHelper.getPrivateValue(GuiScreen.class, event.gui, BUTTON_LIST_FIELD);
+                    
+                    if (buttons != null) {
+                        for (GuiButton button : buttons) {
+                            if (button.visible) {
+                                button.drawButton(event.gui.mc, event.mouseX, event.mouseY);
+                            }
                         }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
     }
