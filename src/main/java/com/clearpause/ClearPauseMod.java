@@ -48,7 +48,7 @@ public class ClearPauseMod {
             // Kontrola pod-menu (zacielene iba na nastavenia chatu, nie na samotny GuiChat)
             boolean isSubMenu = className.contains("Customiz")
                              || className.contains("GuiOption") 
-                             || className.contains("GuiChatOptions")
+                             || className.contains("GuiChatSettings")
                              || className.contains("ScreenOptions")
                              || className.contains("GuiDetailSettings")
                              || className.contains("GuiQualitySettings")
