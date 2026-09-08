@@ -9,17 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up JDK 8
+
+      - name: Set up JDK 17 (For Gradle)
         uses: actions/setup-java@v4
         with:
-          java-version: '8'
+          java-version: '17'
           distribution: 'temurin'
-      - name: Setup Gradle
+
+      - name: Setup Gradle Wrapper
         uses: gradle/actions/setup-gradle@v3
+
       - name: Build with Gradle
         run: gradle build
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ClearPause-JAR
-          path: build/libs/*.jar
