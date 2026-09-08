@@ -1,0 +1,16 @@
+[
+  {
+    "modid": "clearpause",
+    "name": "ClearPause",
+    "description": "clears your menu like in lunar bro enjoy xddddddd",
+    "version": "1.0.0",
+    "mcversion": "1.8.9",
+    "url": "",
+    "updateUrl": "",
+    "authorList": ["scoutmimik"],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
