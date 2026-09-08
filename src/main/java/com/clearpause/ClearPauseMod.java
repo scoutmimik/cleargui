@@ -6,7 +6,6 @@ import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiVideoSettings;
 import net.minecraft.client.gui.GuiScreenOptionsSounds;
-import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -40,20 +39,15 @@ public class ClearPauseMod {
             
             String className = event.gui.getClass().getName();
 
-            // Kontrola hlavnych menu vrátane Achievements
+            // Kontrola hlavnych menu
             boolean isStandardMenu = (event.gui instanceof GuiIngameMenu) 
                                   || (event.gui instanceof GuiOptions) 
                                   || (event.gui instanceof GuiVideoSettings)
-                                  || (event.gui instanceof GuiScreenOptionsSounds)
-                                  || (event.gui instanceof GuiAchievements);
+                                  || (event.gui instanceof GuiScreenOptionsSounds);
 
-            // Kontrola pod-menu cez nazvy tried (Chat, Broadcast, OptiFine pod-menu)
+            // Kontrola stabilnych pod-menu cez nazvy tried
             boolean isSubMenu = className.contains("Customiz")
                              || className.contains("GuiOption") 
-                             || className.contains("Chat")
-                             || className.contains("Stream")
-                             || className.contains("Broadcast")
-                             || className.contains("Achievement")
                              || className.contains("ScreenOptions")
                              || className.contains("GuiDetailSettings")
                              || className.contains("GuiQualitySettings")
