@@ -45,11 +45,11 @@ public class ClearPauseMod {
                                   || (event.gui instanceof GuiVideoSettings)
                                   || (event.gui instanceof GuiScreenOptionsSounds);
 
-            // Zistíme či ide o samotné písanie do chatu (ktoré chceme zachovať funkčné)
-            boolean isChatScreen = className.endsWith("GuiChat");
+            // Cielime len na konfiguračné obrazovky chatu, nie na samotný chat
+            boolean isChatSettings = className.contains("ChatSettings") || className.contains("ChatOptions");
 
-            // Kontrola pod-menu (všetko ostatné vrátane Chat Settings, ale vynecháva aktívny GuiChat)
-            boolean isSubMenu = (className.contains("Chat") && !isChatScreen)
+            // Kontrola pod-menu
+            boolean isSubMenu = isChatSettings
                              || className.contains("Customiz")
                              || className.contains("GuiOption") 
                              || className.contains("ScreenOptions")
