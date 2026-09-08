@@ -1,5 +1,6 @@
 package com.clearpause;
 
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -24,9 +25,15 @@ public class ClearPauseMod {
     }
 
     @SubscribeEvent
-    public void onBackgroundDrawn(GuiScreenEvent.BackgroundDrawnEvent event) {
+    public void onDrawScreen(GuiScreenEvent.DrawScreenEvent.Pre event) {
         if (event.gui instanceof GuiIngameMenu) {
+            // Cancelne vykreslenie pozadia aj celeho default screenu
             event.setCanceled(true);
+
+            // Rucne vykresli tlacidla, aby ostali funkcne bez tmaveho gradientu
+            for (GuiButton button : event.gui.buttonList) {
+                button.drawButton(event.gui.mc, event.mouseX, event.mouseY);
+            }
         }
     }
 }
