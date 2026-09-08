@@ -45,10 +45,10 @@ public class ClearPauseMod {
                                   || (event.gui instanceof GuiVideoSettings)
                                   || (event.gui instanceof GuiScreenOptionsSounds);
 
-            // Kontrola pod-menu (vrátane Chatu a OptiFine)
+            // Kontrola pod-menu (zacielene iba na nastavenia chatu, nie na samotny GuiChat)
             boolean isSubMenu = className.contains("Customiz")
                              || className.contains("GuiOption") 
-                             || className.contains("Chat")
+                             || className.contains("GuiChatOptions")
                              || className.contains("ScreenOptions")
                              || className.contains("GuiDetailSettings")
                              || className.contains("GuiQualitySettings")
