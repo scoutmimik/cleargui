@@ -2,11 +2,15 @@ package com.clearpause;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiIngameMenu;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
+
+import java.util.List;
 
 @Mod(
     modid = ClearPauseMod.MODID, 
@@ -19,6 +23,9 @@ public class ClearPauseMod {
     public static final String NAME = "Clear Pause Menu";
     public static final String VERSION = "1.0.0";
 
+    // MCP názvy pre field buttonList v GuiScreen
+    private static final String[] BUTTON_LIST_FIELD = new String[]{"buttonList", "field_146292_n"};
+
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
@@ -27,12 +34,22 @@ public class ClearPauseMod {
     @SubscribeEvent
     public void onDrawScreen(GuiScreenEvent.DrawScreenEvent.Pre event) {
         if (event.gui instanceof GuiIngameMenu) {
-            // Cancelne vykreslenie pozadia aj celeho default screenu
+            // Cancelne vykreslenie tmavého pozadia
             event.setCanceled(true);
 
-            // Rucne vykresli tlacidla, aby ostali funkcne bez tmaveho gradientu
-            for (GuiButton button : event.gui.buttonList) {
-                button.drawButton(event.gui.mc, event.mouseX, event.mouseY);
+            try {
+                // Cez ReflectionHelper obídeme protected prístup
+                List<GuiButton> buttons = ReflectionHelper.getPrivateValue(GuiScreen.class, event.gui, BUTTON_LIST_FIELD);
+                
+                if (buttons != null) {
+                    for (GuiButton button : buttons) {
+                        if (button.visible) {
+                            button.drawButton(event.gui.mc, event.mouseX, event.mouseY);
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
