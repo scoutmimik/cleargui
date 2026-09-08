@@ -2,7 +2,7 @@ package com.clearpause;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiWorldSelection;
+import net.minecraft.client.gui.GuiSelectWorld;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -34,13 +34,12 @@ public class ClearPauseMod {
 
     @SubscribeEvent
     public void onDrawScreen(GuiScreenEvent.DrawScreenEvent.Pre event) {
-        // Kontrola: Sme vo svete (mc.theWorld != null) a NIE SMR v menu vyberu svetov/serverov
-        if (event.gui != null && event.gui.mc.theWorld != null 
+        // Kontrola: Sme vo svete (mc.theWorld != null) a NIE SME v hlavnych menu zoznamoch
+        if (event.gui != null && event.gui.mc != null && event.gui.mc.theWorld != null 
                 && !(event.gui instanceof GuiMainMenu)
-                && !(event.gui instanceof GuiWorldSelection)
+                && !(event.gui instanceof GuiSelectWorld)
                 && !(event.gui instanceof GuiMultiplayer)) {
 
-            // Zrusime tmavy filter
             event.setCanceled(true);
 
             try {
