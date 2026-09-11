@@ -78,4 +78,28 @@ public class ClearPauseMod {
             }
         }
     }
+
+    public static class CommandClearPause extends CommandBase {
+        @Override
+        public String getCommandName() {
+            return "clearpause";
+        }
+
+        @Override
+        public String getCommandUsage(ICommandSender sender) {
+            return "/clearpause";
+        }
+
+        @Override
+        public int getRequiredPermissionLevel() {
+            return 0;
+        }
+
+        @Override
+        public void processCommand(ICommandSender sender, String[] args) {
+            enabled = !enabled;
+            String status = enabled ? EnumChatFormatting.GREEN + "ON" : EnumChatFormatting.RED + "OFF";
+            sender.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY + "[ClearPause] Mod: " + status));
+        }
+    }
 }
