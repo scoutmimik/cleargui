@@ -109,7 +109,7 @@ public class ClearPauseMod {
         public void processCommand(ICommandSender sender, String[] args) {
             enabled = !enabled;
             String status = enabled ? EnumChatFormatting.GREEN + "ON" : EnumChatFormatting.RED + "OFF";
-            sender.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY + "[ClearPause] Mod: " + status));
+            sender.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY + "ClearPause: " + status));
         }
 
         @Override
